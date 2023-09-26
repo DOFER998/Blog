@@ -1,0 +1,9 @@
+node_modules
+prisma/generated
+dist
+.env
+yarn-error.log
+package-lock.json
+coverage
+tests/api/generated.ts
+.idea
