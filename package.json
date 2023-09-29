@@ -5,6 +5,10 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "db:start": "docker-compose up -d",
+    "db:clear": "docker-compose down --volumes",
+    "db:reset": "docker-compose down --volumes && docker-compose up -d",
+    "db:migrate": "prisma migrate deploy",
     "dev": "nodemon src/index.js",
     "generate": "prisma generate"
   },

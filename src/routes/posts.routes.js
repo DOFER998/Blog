@@ -1,13 +1,14 @@
 import { Router } from 'express';
-import { PostController } from '../controllers/post.controller.js';
+import { PostsController } from '../controllers/posts.controller.js';
 
 const router = Router();
+const postsController = new PostsController();
 
 
-router.get('/:id', PostController.getById);
-router.get('/', PostController.getAll);
-router.post('/', PostController.create);
-router.patch('/:id', PostController.update);
-router.delete('/:id', PostController.destroy);
+router.get('/:id', postsController.getById);
+router.get('/', postsController.getAll);
+router.post('/', postsController.create);
+router.patch('/:id', postsController.update);
+router.delete('/:id', postsController.destroy);
 
 export default router;
