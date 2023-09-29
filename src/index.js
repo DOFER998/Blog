@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import * as routes from './routes';
 import ErrorHandler from '../src/middlewares/errors.handler.js';
+import { commentRouter, postRouter, userRouter } from './routes/index.routes.js';
 
 const app = express();
 const date = new Date();
@@ -9,9 +9,9 @@ const date = new Date();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use('/users', routes.userRouter);
-app.use('/posts', routes.postRouter);
-app.use('/comments', routes.commentRouter);
+app.use('/users', userRouter);
+app.use('/posts', postRouter);
+app.use('/comments', commentRouter);
 
 app.use(ErrorHandler);
 
