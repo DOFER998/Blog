@@ -1,16 +1,17 @@
 {
   "name": "first_project",
-  "type": "module",
   "version": "1.0.0",
-  "main": "index.js",
+  "type": "module",
+  "main": "src/index.ts",
   "license": "MIT",
   "scripts": {
     "db:start": "docker-compose up -d",
     "db:clear": "docker-compose down --volumes",
     "db:reset": "docker-compose down --volumes && docker-compose up -d",
     "db:migrate": "prisma migrate deploy",
-    "dev": "nodemon src/index.js",
-    "generate": "prisma generate"
+    "dev": "nodemon src/index.ts",
+    "generate": "prisma generate",
+    "lint": "prettier --write './**/*.*'"
   },
   "dependencies": {
     "@prisma/client": "^5.3.1",
@@ -19,8 +20,19 @@
     "prisma": "^5.3.1"
   },
   "devDependencies": {
+    "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.18",
+    "@types/node": "^20.8.0",
     "dotenv-cli": "^7.3.0",
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "prettier": "^3.0.3",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.2.2"
+  },
+  "prettier": {
+    "printWidth": 96,
+    "singleQuote": true,
+    "semi": true,
+    "trailingComma": "es5"
   }
 }

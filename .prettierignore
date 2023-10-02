@@ -1,0 +1,10 @@
+node_modules
+prisma
+.env
+yarn-error.log
+package-lock.json
+yarn-error.log
+package-lock.json
+yarn.lock
+.prettierignore
+.gitignore
