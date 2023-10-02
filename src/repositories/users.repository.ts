@@ -1,7 +1,7 @@
-import { Repository } from '../interfaces/repository.interfaces';
+import { Repository } from '../interfaces';
 import { User, PrismaClient } from '../../prisma/generated/client';
 
-export class UsersRepositories implements Repository<User> {
+export class UsersRepository implements Repository<User> {
   constructor(private readonly client: PrismaClient) {}
 
   async create({ name, email }: Pick<User, 'name' | 'email'>): Promise<User | null> {

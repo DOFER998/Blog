@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response, Router } from 'express';
-import { PostControllers } from '../controllers/post.controllers';
-import { PostsRepositories } from '../repositories/posts.repositories';
+import { PostsController } from '../controllers';
+import { PostsRepository } from '../repositories';
 import { prisma } from '../db';
 
 const router = Router();
-const postsController = new PostControllers(new PostsRepositories(prisma));
+const postsController = new PostsController(new PostsRepository(prisma));
 
 router
   .get('/:id', async (req: Request, res: Response, next: NextFunction) => {
