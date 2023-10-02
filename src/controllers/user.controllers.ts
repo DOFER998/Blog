@@ -1,12 +1,12 @@
-import { UsersRepository } from '../repositories/users.repository.js';
-import { UnprocessableEntityError } from '../errors/UnprocessableEntityError.js';
-import { NotFoundError } from '../errors/NotFoundError.js';
+import { Request, Response, NextFunction } from 'express';
+import { UnprocessableEntityError, NotFoundError } from '../errors';
+import { Repository } from '../interfaces/repository.interfaces';
+import { User } from '../../prisma/generated/client';
 
-const usersRepository = new UsersRepository();
+export class UserControllers {
+  constructor(private readonly usersRepository: Repository<User>) {}
 
-export class UsersController {
-
-  async create(req, res, next) {
+  async create(req: Request, res: Response, next: NextFunction) {
     try {
       const { name, email } = req.body;
 
@@ -14,22 +14,21 @@ export class UsersController {
         throw new UnprocessableEntityError('Name and email are required');
       }
 
-      const data = await usersRepository.create(name, email);
+      const data = await this.usersRepository.create({ name, email });
 
       res.status(200).json({ data });
     } catch (err) {
-
       next(err);
     }
   }
 
-  async update(req, res, next) {
+  async update(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
 
       const { name, email } = req.body;
 
-      const user = await usersRepository.getById(id);
+      const user = await this.usersRepository.getById({ id });
 
       if (!user) {
         throw new NotFoundError('User not found');
@@ -38,62 +37,54 @@ export class UsersController {
         throw new UnprocessableEntityError('Name and email are required');
       }
 
-      const data = await usersRepository.update(id, name, email);
+      const data = await this.usersRepository.update({ id, name, email });
 
       res.status(200).json({ data });
-
     } catch (err) {
-
       next(err);
     }
   }
 
-  async destroy(req, res, next) {
+  async destroy(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
 
-      const user = await usersRepository.getById(id);
+      const user = await this.usersRepository.getById({ id });
 
       if (!user) {
         throw new NotFoundError('User not found');
       }
 
-      const data = await usersRepository.delete(id);
+      const data = await this.usersRepository.delete({ id });
 
       res.status(200).json({ data });
-
     } catch (err) {
-
       next(err);
     }
   }
 
-  async getById(req, res, next) {
+  async getById(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
 
-      const data = await usersRepository.getById(id);
+      const data = await this.usersRepository.getById({ id });
 
       if (!data) {
         throw new NotFoundError('User not found');
       }
 
       res.status(200).json({ data });
-
     } catch (err) {
-
       next(err);
     }
   }
 
-  async getAll(req, res, next) {
+  async getAll(res: Response, next: NextFunction) {
     try {
-      const data = await usersRepository.getAll();
+      const data = await this.usersRepository.getAll();
 
       res.status(200).json({ data });
-
     } catch (err) {
-
       next(err);
     }
   }

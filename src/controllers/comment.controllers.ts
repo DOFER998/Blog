@@ -1,12 +1,12 @@
-import { CommentsRepository } from '../repositories/comments.repository.js';
-import { UnprocessableEntityError } from '../errors/UnprocessableEntityError.js';
-import { NotFoundError } from '../errors/NotFoundError.js';
+import { Request, Response, NextFunction } from 'express';
+import { UnprocessableEntityError, NotFoundError } from '../errors';
+import { Repository } from '../interfaces/repository.interfaces';
+import { Comment } from '../../prisma/generated/client';
 
-const commentsRepository = new CommentsRepository();
+export class CommentControllers {
+  constructor(private readonly commentsRepository: Repository<Comment>) {}
 
-export class CommentsController {
-
-  async create(req, res, next) {
+  async create(req: Request, res: Response, next: NextFunction) {
     try {
       const { content, postId, authorId } = req.body;
 
@@ -14,23 +14,21 @@ export class CommentsController {
         throw new UnprocessableEntityError('Content, postId and authorId are required');
       }
 
-      const data = await commentsRepository.create(content, postId, authorId);
+      const data = await this.commentsRepository.create({ content, postId, authorId });
 
       res.status(200).json({ data });
-
     } catch (err) {
-
       next(err);
     }
   }
 
-  async update(req, res, next) {
+  async update(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
 
       const { content } = req.body;
 
-      const comment = await commentsRepository.getById(id);
+      const comment = await this.commentsRepository.getById({ id });
 
       if (!comment) {
         throw new NotFoundError('Comment not found');
@@ -39,61 +37,54 @@ export class CommentsController {
         throw new UnprocessableEntityError('Content is required');
       }
 
-      const data = await commentsRepository.update(id, content);
+      const data = await this.commentsRepository.update({ id, content });
 
       res.status(200).json({ data });
-
     } catch (err) {
-
       next(err);
     }
   }
 
-  async destroy(req, res, next) {
+  async destroy(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
 
-      const comment = await commentsRepository.getById(id);
+      const comment = await this.commentsRepository.getById({ id });
 
       if (!comment) {
         throw new NotFoundError('Comment not found');
       }
 
-      const data = await commentsRepository.delete(id);
+      const data = await this.commentsRepository.delete({ id });
 
       res.status(200).json({ data });
-
     } catch (err) {
-
       next(err);
     }
   }
 
-  async getById(req, res, next) {
+  async getById(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
 
-      const data = await commentsRepository.getById(id);
+      const data = await this.commentsRepository.getById({ id });
 
       if (!data) {
         throw new NotFoundError('Comment not found');
       }
 
       res.status(200).json({ data });
-
     } catch (err) {
-
       next(err);
     }
   }
 
-  async getAll(req, res, next) {
+  async getAll(res: Response, next: NextFunction) {
     try {
-      const data = await commentsRepository.getAll();
+      const data = await this.commentsRepository.getAll();
 
       res.status(200).json({ data });
     } catch (err) {
-
       next(err);
     }
   }
