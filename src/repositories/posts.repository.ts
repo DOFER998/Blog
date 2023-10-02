@@ -1,7 +1,7 @@
 import { Post, PrismaClient } from '../../prisma/generated/client';
-import { Repository } from '../interfaces/repository.interfaces';
+import { Repository } from '../interfaces';
 
-export class PostsRepositories implements Repository<Post> {
+export class PostsRepository implements Repository<Post> {
   constructor(private readonly client: PrismaClient) {}
 
   async create({

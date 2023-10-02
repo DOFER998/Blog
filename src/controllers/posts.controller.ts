@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import { UnprocessableEntityError, NotFoundError } from '../errors';
-import { Repository } from '../interfaces/repository.interfaces';
 import { Post } from '../../prisma/generated/client';
+import { Repository } from '../interfaces';
 
-export class PostControllers {
+export class PostsController {
   constructor(private readonly postsRepository: Repository<Post>) {}
 
   async create(req: Request, res: Response, next: NextFunction) {

@@ -1,7 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
-import ErrorHandler from './middlewares/errors.handler';
-import { commentRouter, postRouter, userRouter } from './routes/index.routes';
+import { commentRouter, postRouter, userRouter } from './routes';
+import { ErrorHandler } from './middlewares';
 
 const app = express();
 const date = new Date();
