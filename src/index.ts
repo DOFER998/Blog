@@ -1,11 +1,10 @@
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
-import ErrorHandler from '../src/middlewares/errors.handler.js';
-import { commentRouter, postRouter, userRouter } from './routes/index.routes.js';
+import ErrorHandler from './middlewares/errors.handler';
+import { commentRouter, postRouter, userRouter } from './routes/index.routes';
 
 const app = express();
 const date = new Date();
-
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -15,14 +14,14 @@ app.use('/comments', commentRouter);
 
 app.use(ErrorHandler);
 
-app.get('/', (req, res, next) => {
+app.get('/', (req: Request, res: Response, _next: NextFunction) => {
   res.status(200).json({
     message: 'Backend Service Running.',
     timestamp: date.toString(),
   });
 });
 
-const port = parseInt(process.env.PORT) || 4000;
+const port = parseInt(process.env.PORT || '4000');
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
 });
