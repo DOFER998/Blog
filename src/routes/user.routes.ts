@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response, Router } from 'express';
-import { UserControllers } from '../controllers/user.controllers';
-import { UsersRepositories } from '../repositories/users.repositories';
 import { prisma } from '../db';
+import { UsersRepository } from '../repositories';
+import { UsersController } from '../controllers';
 
 const router = Router();
-const usersController = new UserControllers(new UsersRepositories(prisma));
+const usersController = new UsersController(new UsersRepository(prisma));
 
 router
   .get('/:id', async (req: Request, res: Response, next: NextFunction) => {

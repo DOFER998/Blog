@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response, Router } from 'express';
-import { CommentControllers } from '../controllers/comment.controllers';
-import { CommentRepositories } from '../repositories/comment.repositories';
+import { CommentsController } from '../controllers';
+import { CommentsRepository } from '../repositories';
 import { prisma } from '../db';
 
 const router = Router();
-const commentsController = new CommentControllers(new CommentRepositories(prisma));
+const commentsController = new CommentsController(new CommentsRepository(prisma));
 
 router
   .get('/:id', async (req: Request, res: Response, next: NextFunction) => {
