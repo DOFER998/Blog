@@ -1,5 +1,5 @@
-import { Comment, PrismaClient } from '../../prisma/generated/client';
-import { Repository } from '../interfaces';
+import { Comment, PrismaClient } from '../../../prisma/generated/client';
+import { Repository } from '../../presentation/rest/interfaces';
 
 export class CommentsRepository implements Repository<Comment> {
   constructor(private readonly client: PrismaClient) {}

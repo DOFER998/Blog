@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { UnprocessableEntityError, NotFoundError } from '../errors';
-import { Comment } from '../../prisma/generated/client';
+import { Comment } from '../../../../prisma/generated/client';
 import { Repository } from '../interfaces';
 
 export class CommentsController {

@@ -1,26 +1,26 @@
 import { NextFunction, Request, Response, Router } from 'express';
-import { CommentsController } from '../controllers';
-import { CommentsRepository } from '../repositories';
-import { prisma } from '../db';
+import { PostsController } from '../controllers';
+import { PostsRepository } from '../../../services/repositories';
+import { prisma } from '../../../services/db';
 
 const router = Router();
-const commentsController = new CommentsController(new CommentsRepository(prisma));
+const postsController = new PostsController(new PostsRepository(prisma));
 
 router
   .get('/:id', async (req: Request, res: Response, next: NextFunction) => {
-    await commentsController.getById(req, res, next);
+    await postsController.getById(req, res, next);
   })
   .get('/', async (_, res: Response, next: NextFunction) => {
-    await commentsController.getAll(res, next);
+    await postsController.getAll(res, next);
   })
   .post('/', async (req: Request, res: Response, next: NextFunction) => {
-    await commentsController.create(req, res, next);
+    await postsController.create(req, res, next);
   })
   .patch('/:id', async (req: Request, res: Response, next: NextFunction) => {
-    await commentsController.update(req, res, next);
+    await postsController.update(req, res, next);
   })
   .delete('/:id', async (req: Request, res: Response, next: NextFunction) => {
-    await commentsController.destroy(req, res, next);
+    await postsController.destroy(req, res, next);
   });
 
 export default router;

@@ -1,18 +1,17 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
+import { graphqlRouter, restRouter } from './presentation';
 import bodyParser from 'body-parser';
-import { commentRouter, postRouter, userRouter } from './routes';
-import { ErrorHandler } from './middlewares';
+import cors from 'cors';
 
 const app = express();
 const date = new Date();
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use('/users', userRouter);
-app.use('/posts', postRouter);
-app.use('/comments', commentRouter);
 
-app.use(ErrorHandler);
+app.use('/rest', restRouter);
+app.use('/graphql', graphqlRouter);
 
 app.get('/', (req: Request, res: Response, _next: NextFunction) => {
   res.status(200).json({
@@ -22,6 +21,7 @@ app.get('/', (req: Request, res: Response, _next: NextFunction) => {
 });
 
 const port = parseInt(process.env.PORT || '4000');
+
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
 });

@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { UnprocessableEntityError, NotFoundError } from '../errors';
-import { Post } from '../../prisma/generated/client';
+import { Post } from '../../../../prisma/generated/client';
 import { Repository } from '../interfaces';
 
 export class PostsController {

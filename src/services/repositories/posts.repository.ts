@@ -1,5 +1,5 @@
-import { Post, PrismaClient } from '../../prisma/generated/client';
-import { Repository } from '../interfaces';
+import { Post, PrismaClient } from '../../../prisma/generated/client';
+import { Repository } from '../../presentation/rest/interfaces';
 
 export class PostsRepository implements Repository<Post> {
   constructor(private readonly client: PrismaClient) {}
